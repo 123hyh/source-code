@@ -138,6 +138,3 @@ export class MyPromise {
     return this;
   }
 }
-new MyPromise(resolve => {
-  return resolve(1);
-});
