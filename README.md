@@ -1,4 +1,4 @@
-# Javascript Api 源码（基于 typescript）
+# <center>Javascript Api 源码（基于 typescript）</center>
 
 ###### 开始
 
