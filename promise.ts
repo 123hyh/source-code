@@ -10,7 +10,7 @@ class LinkedNode<T> {
 
 type TFun = (data: any) => any;
 type TPromiseCb = TFun | null | undefined;
-type TExecutorParamItem = (this: any, data?: any) => any;
+type TExecutorParamItem = (data?: any) => any;
 type TExecutor = (
   resolve: TExecutorParamItem,
   reject: TExecutorParamItem
@@ -21,7 +21,7 @@ type TExecutor = (
  * @param {Function | any} fn 任务
  * @param {Boolean} isFulfilld 是否为 完成；决定 task的类型
  */
-function addTask(this: MyPromise, fn: any, isFulfilld = false): any {
+function addTask(this: MyPromise, fn: any, isFulfilld: boolean = false): any {
   if (typeof fn === "function") {
     let pre = this.taskQueue,
       task = new LinkedNode({ [isFulfilld ? "fulfilld" : "rejectd"]: fn });
@@ -51,8 +51,7 @@ export class MyPromise {
   constructor(executor: TExecutor) {
     this.status = "pendding";
     this.taskQueue = null;
-
-    const resolve: TExecutorParamItem = function(response) {
+    const resolve: TExecutorParamItem = function(this: MyPromise, response) {
       this.status = "fulfilld";
       queueMicrotask(() => {
         let pre = null;
@@ -99,7 +98,7 @@ export class MyPromise {
       });
     };
 
-    const reject: TExecutorParamItem = function(error) {
+    const reject: TExecutorParamItem = function(this: MyPromise, error) {
       this.status = "rejectd";
       queueMicrotask(() => {
         let pre = this.taskQueue;
