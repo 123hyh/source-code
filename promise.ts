@@ -10,7 +10,7 @@ class LinkedNode<T> {
 
 type TFun = (data: any) => any;
 type TPromiseCb = TFun | null | undefined;
-type TExecutorParamItem = (this: MyPromise, data?: any) => any;
+type TExecutorParamItem = (this: any, data?: any) => any;
 type TExecutor = (
   resolve: TExecutorParamItem,
   reject: TExecutorParamItem
